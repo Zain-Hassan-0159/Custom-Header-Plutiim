@@ -17,6 +17,8 @@ jQuery(document).ready(function ($) {
         hiddenNavWrapper.addClass("menu_open");
         buttonClose.removeClass("d-none");
         hiddenNavWrapper.removeClass("d-none");
+		$("body").addClass("menu-open");
+
     });
 
     buttonClose.on("click", function () {
@@ -24,6 +26,7 @@ jQuery(document).ready(function ($) {
         $(".menu_open").removeClass("menu_open");
         buttonNormal.removeClass("d-none");
         hiddenNavWrapper.addClass("d-none");
+		$("body").removeClass("menu-open");
     });
 
     hiddenNavParentsLi.on("click", function () {

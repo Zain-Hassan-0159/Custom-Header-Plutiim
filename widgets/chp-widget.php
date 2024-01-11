@@ -609,6 +609,9 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 list-style: none;
                 margin: 0;
                 padding: 0;
+				max-width: 50%;
+                border-right: 1px solid #ffffff40;
+				padding-right: 50px;
             }
 
             #primary_header ul.childs {
@@ -619,8 +622,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                padding-left: 50px;
-                border-left: 1px solid #ffffff40;;
+				padding-left: 50px;
             }
 
             #primary_header a {
@@ -733,6 +735,32 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 display: none;
             }
 
+			#primary_header .logo {
+				flex: 1;
+			}
+
+			#primary_header .menu_button {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			#primary_header .shop {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				justify-content: end;
+			}
+			
+			#primary_header a, #primary_header button {
+			  -webkit-tap-highlight-color: transparent;
+			  tap-highlight-color: transparent;
+			}
+			
+			body.menu-open {
+				overflow: hidden;
+			}
 
             @media(max-width: 500px){
 
@@ -785,6 +813,8 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     border: none;
                     margin: 0;
                     text-align: center;
+					padding: 0;
+					max-width: 100%;
                 }
 
                 #primary_header .hidden_nav a {
@@ -855,6 +885,16 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     margin: 0;
                     text-align: center;
                 }
+				
+				#primary_header .menu_button {
+					justify-content: flex-start;
+				}
+
+				#primary_header .logo{
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
             }
         </style>
         <header id="primary_header">
@@ -895,11 +935,14 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                         <a href="<?php echo wc_get_cart_url(); ?>">
                             <span>Webshop</span>
                             <div class="cart">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
-                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
-                                </svg>
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+								<defs><clipPath id="clip-path"><rect id="Rectangle_531" data-name="Rectangle 531" width="24" height="24" fill="#fff">
+									</rect></clipPath></defs><g id="Group_577" data-name="Group 577" clip-path="url(#clip-path)"><path id="Path_190" data-name="Path 190" d="M22.5,0H1.5A1.5,1.5,0,0,0,0,1.5v18A4.5,4.5,0,0,0,4.5,24h15A4.5,4.5,0,0,0,24,19.5V1.5A1.5,1.5,0,0,0,22.5,0M21,19.5A1.5,1.5,0,0,1,19.5,21H4.5A1.5,1.5,0,0,1,3,19.5V3H21Z" fill="#fff">
+								</path>
+								<path id="Path_191" data-name="Path 191" d="M10.827,14.453h.344A5.833,5.833,0,0,0,17,8.627V5.5a1.5,1.5,0,0,0-3,0V8.627a2.83,2.83,0,0,1-2.827,2.826h-.344A2.83,2.83,0,0,1,8,8.627V5.5a1.5,1.5,0,1,0-3,0V8.627a5.834,5.834,0,0,0,5.827,5.826" transform="translate(1 0.8)" fill="#fff">
+								</path>
+								</g>
+								</svg>
                                 <div class="items">0</div>
                             </div>
                         </a>
@@ -989,6 +1032,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     hiddenNavWrapper.addClass("menu_open");
                     buttonClose.removeClass("d-none");
                     hiddenNavWrapper.removeClass("d-none");
+					$("body").addClass("menu-open");
                 });
 
                 buttonClose.on("click", function () {
@@ -996,6 +1040,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     $(".menu_open").removeClass("menu_open");
                     buttonNormal.removeClass("d-none");
                     hiddenNavWrapper.addClass("d-none");
+					$("body").removeClass("menu-open");
                 });
 
                 hiddenNavParentsLi.on("click", function () {
