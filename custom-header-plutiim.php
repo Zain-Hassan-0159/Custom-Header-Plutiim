@@ -35,3 +35,11 @@ function register_chp_widget( $widgets_manager ) {
 
 }
 add_action( 'elementor/widgets/register', 'register_chp_widget' );
+
+function plutiim_register_dependencies_scripts() {
+
+	/* Scripts */
+	wp_register_script( 'custom-header-plutiim', plugins_url( 'inc/assets/js/header-plutiim.js', __FILE__ ));
+
+}
+add_action( 'wp_enqueue_scripts', 'plutiim_register_dependencies_scripts' );

@@ -90,6 +90,10 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 		return [ 'header', 'nav', 'custom header', 'plutiim' ];
 	}
 
+    public function get_script_depends() {
+		return [ 'custom-header-plutiim' ];
+	}
+
     private function get_menus(){
         // Get all menus
         $menus = wp_get_nav_menus();
@@ -124,7 +128,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__( 'General', 'textdomain' ),
+				'label' => esc_html__( 'General', 'hz-widgets' ),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -132,7 +136,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_control(
 			'container_width',
 			[
-				'label' => esc_html__( 'Container Width', 'textdomain' ),
+				'label' => esc_html__( 'Container Width', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range' => [
@@ -155,11 +159,11 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_control(
 			'select_menu',
 			[
-				'label' => esc_html__( 'Select Menu', 'textdomain' ),
+				'label' => esc_html__( 'Select Menu', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => '',
 				'options' => $this->get_menus(),
-                'description' => __( 'IF there is no menu available then <a href="'.get_site_url(null, '/wp-admin/nav-menus.php?action=edit&menu=0').'">Create One</a>', 'textdomain' ),
+                'description' => __( 'IF there is no menu available then <a href="'.get_site_url(null, '/wp-admin/nav-menus.php?action=edit&menu=0').'">Create One</a>', 'hz-widgets' ),
 			]
 		);
 
@@ -168,9 +172,9 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 		$repeater->add_control(
 			'link_title',
 			[
-				'label' => esc_html__( 'Title', 'textdomain' ),
+				'label' => esc_html__( 'Title', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'List Title' , 'textdomain' ),
+				'default' => esc_html__( 'List Title' , 'hz-widgets' ),
 				'label_block' => true,
 			]
 		);
@@ -178,7 +182,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 		$repeater->add_control(
 			'website_link',
 			[
-				'label' => esc_html__( 'Link', 'textdomain' ),
+				'label' => esc_html__( 'Link', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::URL,
 				'options' => [ 'url', 'is_external', 'nofollow' ],
 				'default' => [
@@ -194,17 +198,17 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 		$this->add_control(
 			'responsive_links',
 			[
-				'label' => esc_html__( 'Responsive Links', 'textdomain' ),
+				'label' => esc_html__( 'Responsive Links', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'link_title' => esc_html__( 'Project: Europees landbouwfounds', 'textdomain' ),
-						'website_link' => esc_html__( '#', 'textdomain' ),
+						'link_title' => esc_html__( 'Project: Europees landbouwfounds', 'hz-widgets' ),
+						'website_link' => esc_html__( '#', 'hz-widgets' ),
 					],
 					[
-						'link_title' => esc_html__( 'Veelgestelde vragen', 'textdomain' ),
-						'website_link' => esc_html__( '#', 'textdomain' ),
+						'link_title' => esc_html__( 'Veelgestelde vragen', 'hz-widgets' ),
+						'website_link' => esc_html__( '#', 'hz-widgets' ),
 					],
 				],
 				'title_field' => '{{{ link_title }}}',
@@ -216,7 +220,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
 			'general_style_section',
 			[
-				'label' => esc_html__( 'General Style', 'textdomain' ),
+				'label' => esc_html__( 'General Style', 'hz-widgets' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -224,7 +228,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'header_background_color',
 			[
-				'label' => esc_html__( 'Header Background Color', 'textdomain' ),
+				'label' => esc_html__( 'Header Background Color', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
                 'devices' => [ 'mobile' ],
 				'selectors' => [
@@ -236,7 +240,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'background_color',
 			[
-				'label' => esc_html__( 'Background Color', 'textdomain' ),
+				'label' => esc_html__( 'Background Color', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .menu_open' => 'background-color: {{VALUE}}',
@@ -249,7 +253,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'span_sup_color',
 			[
-				'label' => esc_html__( 'Small/Tiny Text Color', 'textdomain' ),
+				'label' => esc_html__( 'Small/Tiny Text Color', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .childs a span' => 'color: {{VALUE}}',
@@ -265,7 +269,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
 			'style_section',
 			[
-				'label' => esc_html__( 'Top Menu Style', 'textdomain' ),
+				'label' => esc_html__( 'Top Menu Style', 'hz-widgets' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -273,7 +277,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'text_color_top',
 			[
-				'label' => esc_html__( 'Text Color', 'textdomain' ),
+				'label' => esc_html__( 'Text Color', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .show_nav a' => 'color: {{VALUE}}',
@@ -289,7 +293,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography_top',
-                'label' => esc_html__( 'Text Typography', 'textdomain' ),
+                'label' => esc_html__( 'Text Typography', 'hz-widgets' ),
 				'selector' => '{{WRAPPER}} #primary_header .show_nav a, {{WRAPPER}} #primary_header .show_nav button',
 			]
 		);
@@ -298,7 +302,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'text_color_top_hover',
 			[
-				'label' => esc_html__( 'Text Color Hover', 'textdomain' ),
+				'label' => esc_html__( 'Text Color Hover', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .show_nav a:hover' => 'color: {{VALUE}}',
@@ -313,7 +317,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'cart_color_top',
 			[
-				'label' => esc_html__( 'Cart Counter Color', 'textdomain' ),
+				'label' => esc_html__( 'Cart Counter Color', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .cart .items' => 'background-color: {{VALUE}}',
@@ -327,7 +331,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
 			'button_style_section',
 			[
-				'label' => esc_html__( 'Button Menu Style', 'textdomain' ),
+				'label' => esc_html__( 'Button Menu Style', 'hz-widgets' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -335,7 +339,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'text_color_button',
 			[
-				'label' => esc_html__( 'Text Color', 'textdomain' ),
+				'label' => esc_html__( 'Text Color', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
                     '{{WRAPPER}} #primary_header .show_nav .menu_button button' => 'color: {{VALUE}}',
@@ -348,7 +352,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'button_color_button',
 			[
-				'label' => esc_html__( 'Button Color', 'textdomain' ),
+				'label' => esc_html__( 'Button Color', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
                     '{{WRAPPER}} #primary_header .show_nav .menu_button button' => 'background-color: {{VALUE}}',
@@ -360,7 +364,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography_button',
-                'label' => esc_html__( 'Button Typography', 'textdomain' ),
+                'label' => esc_html__( 'Button Typography', 'hz-widgets' ),
 				'selector' => '{{WRAPPER}} #primary_header .show_nav .menu_button button',
 			]
 		);
@@ -368,7 +372,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'button_margin',
 			[
-				'label' => esc_html__( 'Padding', 'textdomain' ),
+				'label' => esc_html__( 'Padding', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
@@ -380,7 +384,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'button_radius',
 			[
-				'label' => esc_html__( 'Radius', 'textdomain' ),
+				'label' => esc_html__( 'Radius', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
@@ -392,7 +396,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'text_color_button_hover',
 			[
-				'label' => esc_html__( 'Text Color Hover', 'textdomain' ),
+				'label' => esc_html__( 'Text Color Hover', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
                     '{{WRAPPER}} #primary_header .show_nav .menu_button button:hover' => 'color: {{VALUE}}',
@@ -405,7 +409,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'button_color_button_hover',
 			[
-				'label' => esc_html__( 'Button Color Hover', 'textdomain' ),
+				'label' => esc_html__( 'Button Color Hover', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
                     '{{WRAPPER}} #primary_header .show_nav .menu_button button:hover' => 'background-color: {{VALUE}}',
@@ -418,7 +422,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
 			'hidden_style_section',
 			[
-				'label' => esc_html__( 'Hidden Menu Style', 'textdomain' ),
+				'label' => esc_html__( 'Hidden Menu Style', 'hz-widgets' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -426,7 +430,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'text_color_lvlone',
 			[
-				'label' => esc_html__( 'Text Color Level 1', 'textdomain' ),
+				'label' => esc_html__( 'Text Color Level 1', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .hidden_nav .parents a' => 'color: {{VALUE}}',
@@ -438,7 +442,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography_levelone',
-                'label' => esc_html__( 'Text Typography Level 1', 'textdomain' ),
+                'label' => esc_html__( 'Text Typography Level 1', 'hz-widgets' ),
 				'selector' => '{{WRAPPER}} #primary_header .hidden_nav .parents a',
 			]
 		);
@@ -446,7 +450,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'text_color_lvlone_hover',
 			[
-				'label' => esc_html__( 'Text Color Level 1 Hover', 'textdomain' ),
+				'label' => esc_html__( 'Text Color Level 1 Hover', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .hidden_nav .parents a:hover' => 'color: {{VALUE}}',
@@ -457,7 +461,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'text_color_lvltwo',
 			[
-				'label' => esc_html__( 'Text Color Level 2', 'textdomain' ),
+				'label' => esc_html__( 'Text Color Level 2', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .hidden_nav .childs a' => 'color: {{VALUE}}',
@@ -469,7 +473,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography_leveltwo',
-                'label' => esc_html__( 'Text Typography Level 2', 'textdomain' ),
+                'label' => esc_html__( 'Text Typography Level 2', 'hz-widgets' ),
 				'selector' => '{{WRAPPER}} #primary_header .hidden_nav .childs a',
 			]
 		);
@@ -477,7 +481,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'text_color_lvltwo_hover',
 			[
-				'label' => esc_html__( 'Text Color Level 2 Hover', 'textdomain' ),
+				'label' => esc_html__( 'Text Color Level 2 Hover', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .hidden_nav .childs a:hover' => 'color: {{VALUE}}',
@@ -488,7 +492,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
 			'text_color_responsive',
 			[
-				'label' => esc_html__( 'Responsive Bottom Text', 'textdomain' ),
+				'label' => esc_html__( 'Responsive Bottom Text', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .mobile_nav ul li a' => 'color: {{VALUE}}',
@@ -500,7 +504,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography_levelresponsive',
-                'label' => esc_html__( 'Responsive Bottom Text Typography', 'textdomain' ),
+                'label' => esc_html__( 'Responsive Bottom Text Typography', 'hz-widgets' ),
 				'selector' => '{{WRAPPER}} #primary_header .mobile_nav ul li a',
 			]
 		);
@@ -955,6 +959,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 </nav> 
             </nav>
         </header>
+        <?php     if ( \Elementor\Plugin::$instance->editor->is_edit_mode()) : ?>
         <script>
             jQuery(document).ready(function ($) {
                 const primaryHeader = $("#primary_header");
@@ -1003,6 +1008,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             });
 
         </script>
+        <?php endif; ?>
 		<?php
 	}
 
