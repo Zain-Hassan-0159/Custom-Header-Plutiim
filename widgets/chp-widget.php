@@ -130,17 +130,383 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 		);
 
         $this->add_control(
+			'container_width',
+			[
+				'label' => esc_html__( 'Container Width', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 2000,
+						'step' => 5,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 1200,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .container' => 'max-width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+        $this->add_control(
 			'select_menu',
 			[
 				'label' => esc_html__( 'Select Menu', 'textdomain' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => '',
 				'options' => $this->get_menus(),
+                'description' => __( 'IF there is no menu available then <a href="'.get_site_url(null, '/wp-admin/nav-menus.php?action=edit&menu=0').'">Create One</a>', 'textdomain' ),
+			]
+		);
+
+        $repeater = new \Elementor\Repeater();
+
+		$repeater->add_control(
+			'link_title',
+			[
+				'label' => esc_html__( 'Title', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'List Title' , 'textdomain' ),
+				'label_block' => true,
+			]
+		);
+
+		$repeater->add_control(
+			'website_link',
+			[
+				'label' => esc_html__( 'Link', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'options' => [ 'url', 'is_external', 'nofollow' ],
+				'default' => [
+					'url' => '#',
+					'is_external' => true,
+					'nofollow' => true,
+					// 'custom_attributes' => '',
+				],
+				'label_block' => true,
+			]
+		);
+
+		$this->add_control(
+			'responsive_links',
+			[
+				'label' => esc_html__( 'Responsive Links', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'default' => [
+					[
+						'link_title' => esc_html__( 'Project: Europees landbouwfounds', 'textdomain' ),
+						'website_link' => esc_html__( '#', 'textdomain' ),
+					],
+					[
+						'link_title' => esc_html__( 'Veelgestelde vragen', 'textdomain' ),
+						'website_link' => esc_html__( '#', 'textdomain' ),
+					],
+				],
+				'title_field' => '{{{ link_title }}}',
 			]
 		);
 
 		$this->end_controls_section();
 
+        $this->start_controls_section(
+			'general_style_section',
+			[
+				'label' => esc_html__( 'General Style', 'textdomain' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+        $this->add_responsive_control(
+			'header_background_color',
+			[
+				'label' => esc_html__( 'Header Background Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+                'devices' => [ 'mobile' ],
+				'selectors' => [
+                    '{{WRAPPER}} #primary_header' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'background_color',
+			[
+				'label' => esc_html__( 'Background Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .menu_open' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header ul.childs' => 'background-color: {{VALUE}}',
+
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'span_sup_color',
+			[
+				'label' => esc_html__( 'Small/Tiny Text Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .childs a span' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header sup' => 'color: {{VALUE}}',
+
+				],
+			]
+		);
+
+        $this->end_controls_section();
+
+
+        $this->start_controls_section(
+			'style_section',
+			[
+				'label' => esc_html__( 'Top Menu Style', 'textdomain' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+        $this->add_responsive_control(
+			'text_color_top',
+			[
+				'label' => esc_html__( 'Text Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .show_nav a' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav button' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav button.close svg line' => 'stroke: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav button.normal svg path' => 'fill: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .cart svg' => 'stroke: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography_top',
+                'label' => esc_html__( 'Text Typography', 'textdomain' ),
+				'selector' => '{{WRAPPER}} #primary_header .show_nav a, {{WRAPPER}} #primary_header .show_nav button',
+			]
+		);
+
+
+        $this->add_responsive_control(
+			'text_color_top_hover',
+			[
+				'label' => esc_html__( 'Text Color Hover', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .show_nav a:hover' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav button:hover' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav button.close:hover svg line' => 'stroke: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav button.normal:hover svg path' => 'fill: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header a:hover .cart svg' => 'stroke: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'cart_color_top',
+			[
+				'label' => esc_html__( 'Cart Counter Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .cart .items' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+			'button_style_section',
+			[
+				'label' => esc_html__( 'Button Menu Style', 'textdomain' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+        $this->add_responsive_control(
+			'text_color_button',
+			[
+				'label' => esc_html__( 'Text Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+                    '{{WRAPPER}} #primary_header .show_nav .menu_button button' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav .menu_button button.close svg line' => 'stroke: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav .menu_button button.normal svg path' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'button_color_button',
+			[
+				'label' => esc_html__( 'Button Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+                    '{{WRAPPER}} #primary_header .show_nav .menu_button button' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography_button',
+                'label' => esc_html__( 'Button Typography', 'textdomain' ),
+				'selector' => '{{WRAPPER}} #primary_header .show_nav .menu_button button',
+			]
+		);
+
+        $this->add_responsive_control(
+			'button_margin',
+			[
+				'label' => esc_html__( 'Padding', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .show_nav .menu_button button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'button_radius',
+			[
+				'label' => esc_html__( 'Radius', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .show_nav .menu_button button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'text_color_button_hover',
+			[
+				'label' => esc_html__( 'Text Color Hover', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+                    '{{WRAPPER}} #primary_header .show_nav .menu_button button:hover' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav .menu_button button.close:hover svg line' => 'stroke: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .show_nav .menu_button button.normal:hover svg path' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'button_color_button_hover',
+			[
+				'label' => esc_html__( 'Button Color Hover', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+                    '{{WRAPPER}} #primary_header .show_nav .menu_button button:hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+			'hidden_style_section',
+			[
+				'label' => esc_html__( 'Hidden Menu Style', 'textdomain' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+        $this->add_responsive_control(
+			'text_color_lvlone',
+			[
+				'label' => esc_html__( 'Text Color Level 1', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .hidden_nav .parents a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography_levelone',
+                'label' => esc_html__( 'Text Typography Level 1', 'textdomain' ),
+				'selector' => '{{WRAPPER}} #primary_header .hidden_nav .parents a',
+			]
+		);
+
+        $this->add_responsive_control(
+			'text_color_lvlone_hover',
+			[
+				'label' => esc_html__( 'Text Color Level 1 Hover', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .hidden_nav .parents a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'text_color_lvltwo',
+			[
+				'label' => esc_html__( 'Text Color Level 2', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .hidden_nav .childs a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography_leveltwo',
+                'label' => esc_html__( 'Text Typography Level 2', 'textdomain' ),
+				'selector' => '{{WRAPPER}} #primary_header .hidden_nav .childs a',
+			]
+		);
+
+        $this->add_responsive_control(
+			'text_color_lvltwo_hover',
+			[
+				'label' => esc_html__( 'Text Color Level 2 Hover', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .hidden_nav .childs a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'text_color_responsive',
+			[
+				'label' => esc_html__( 'Responsive Bottom Text', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .mobile_nav ul li a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography_levelresponsive',
+                'label' => esc_html__( 'Responsive Bottom Text Typography', 'textdomain' ),
+				'selector' => '{{WRAPPER}} #primary_header .mobile_nav ul li a',
+			]
+		);
+
+
+        $this->end_controls_section();
 	}
 
     private function get_child_counts($menu_items){
@@ -148,15 +514,17 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         $child_counts = array();
 
         // Loop through each menu item
-        foreach ($menu_items as $menu_item) {
-            // If the menu item has a parent ID, it is a child item
-            if ($menu_item->menu_item_parent) {
-                // Increment the child count for the parent item
-                $parent_id = $menu_item->menu_item_parent;
-                if (isset($child_counts[$parent_id])) {
-                    $child_counts[$parent_id]++;
-                } else {
-                    $child_counts[$parent_id] = 1;
+        if($menu_items){
+            foreach ($menu_items as $menu_item) {
+                // If the menu item has a parent ID, it is a child item
+                if ($menu_item->menu_item_parent) {
+                    // Increment the child count for the parent item
+                    $parent_id = $menu_item->menu_item_parent;
+                    if (isset($child_counts[$parent_id])) {
+                        $child_counts[$parent_id]++;
+                    } else {
+                        $child_counts[$parent_id] = 1;
+                    }
                 }
             }
         }
@@ -191,6 +559,10 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 outline: none;
             }
 
+            #primary_header .logo img{
+                max-height: 50px;
+            }
+
             #primary_header .show_nav{
                 padding: 40px 0;
             }
@@ -202,7 +574,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             }
 
 
-            #primary_header .show_nav button.close svg {
+            #primary_header .show_nav button.close svg line{
                 stroke: white;
             }
 
@@ -220,7 +592,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             }
 
             #primary_header .menu_open {
-                background: #2a3b22 !important;
+                background: #2a3b22;
             }
 
             #primary_header .hidden_nav {
@@ -233,8 +605,6 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 list-style: none;
                 margin: 0;
                 padding: 0;
-                /* border-right: 1px solid #ffffff40; */
-                /* margin-right: 50px; */
             }
 
             #primary_header ul.childs {
@@ -286,7 +656,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 width: 100%;
                 margin: auto;
                 position: relative;
-                z-index: 9999;
+                z-index: 99;
                 padding: 0 30px;
             }
 
@@ -304,7 +674,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 justify-content: center;
                 align-items: center;
                 overflow: hidden;
-                z-index: 999;
+                z-index: 90;
             }
 
             #primary_header .d-none{
@@ -360,7 +730,9 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 display: none;
             }
 
+
             @media(max-width: 500px){
+
                 #primary_header .show_nav .logo {
                     order: 1;
                 }
@@ -429,7 +801,11 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 
                 #primary_header svg.feather.feather-arrow-left {
                     float: left;
-                    stroke: #65725e;
+                    transform: translateY(7px);                
+                }
+
+                #primary_header svg.feather.feather-arrow-left path{
+                    fill: #65725e;
                 }
 
                 #primary_header .backward {
@@ -456,6 +832,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 #primary_header .mobile_nav ul {
                     padding: 0;
                     text-align: center;
+                    list-style: none;
                 }
 
                 #primary_header .mobile_nav ul li a {
@@ -473,7 +850,18 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         <header id="primary_header">
             <div class="container">
                 <nav class="show_nav">
-                    <div class="logo"><a href="#">FarmFields</a></div>
+                    <div class="logo">
+                        <?php
+                        $custom_logo_id = get_theme_mod('custom_logo');
+                        
+                        if ($custom_logo_id) {
+                            $logo_img = wp_get_attachment_image_src($custom_logo_id, 'full');
+                            echo '<a href="' . home_url('/') . '"><img src="' . esc_url($logo_img[0]) . '" alt="' . get_bloginfo('name') . '"></a>';
+                        } else {
+                            echo '<a href="' . home_url('/') . '">' . get_bloginfo('name') . '</a>';
+                        }
+                        ?>
+                    </div>
                     <div class="menu_button">
                         <button class="normal"><span>Menu</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="25.455" height="17.913" viewBox="0 0 25.455 17.913">
@@ -485,7 +873,11 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                             </svg>
                         </button>
                         <button class="close d-none"><span>Menu</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#eae9e5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15.557" height="15.556" viewBox="0 0 15.557 15.556">
+                                <g id="Group_720" data-name="Group 720" transform="translate(-301.17 -23.707)">
+                                    <line id="Line_25" data-name="Line 25" x2="16" transform="translate(303.291 25.828) rotate(45)" fill="none" stroke="#eae9e5" stroke-linecap="round" stroke-width="3"/>
+                                    <line id="Line_47" data-name="Line 47" x2="16" transform="translate(314.605 25.828) rotate(135)" fill="none" stroke="#eae9e5" stroke-linecap="round" stroke-width="3"/>
+                                </g>
                             </svg>
                         </button>
                     </div>
@@ -504,9 +896,11 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             <nav class="hidden_nav_wrapper d-none">
                 <div class="container">
                     <div class="backward d-none">
-                        <a href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#65725e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline>
+                        <a href="#">              
+                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-arrow-left" width="16" height="11.2" viewBox="0 0 16 11.2">
+                            <path id="Icon_ionic-ios-arrow-round-forward" data-name="Icon ionic-ios-arrow-round-forward" d="M13.671,11.466a.789.789,0,0,1,.006,1.073L10.3,16.092h12.86a.759.759,0,0,1,0,1.517H10.3l3.379,3.552a.8.8,0,0,1-.006,1.073.7.7,0,0,1-1.017-.006L8.081,17.387h0a.856.856,0,0,1-.15-.239.755.755,0,0,1-.056-.292.78.78,0,0,1,.206-.531l4.579-4.841A.685.685,0,0,1,13.671,11.466Z" transform="translate(-7.875 -11.252)" fill="#c6cfb7"/>
                             </svg>
+
                             <span class="text"></span>
                         </a>
                     </div>
@@ -547,10 +941,17 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     </div>
                 </div>
                 <nav class="mobile_nav">
-                    <ul>
-                        <li><a href="#">Project: Europees landbouwfounds</a></li>
-                        <li><a href="#">Veelgestelde vragen</a></li>
-                    </ul>
+                    <?php
+                        if ( $settings['responsive_links'] ) {
+                            echo '<ul>';
+                            foreach (  $settings['responsive_links'] as $item ) {
+                                ?>
+                                    <li><a href="<?php echo $item['website_link']['url']; ?>"><?php echo $item['link_title']; ?></a></li>
+                                <?php
+                            }
+                            echo '</ul>';
+                        }
+                    ?>
                 </nav> 
             </nav>
         </header>
