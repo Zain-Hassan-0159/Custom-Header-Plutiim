@@ -565,6 +565,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 
             #primary_header .logo img{
                 max-height: 50px;
+                width: 180px;
             }
 
             #primary_header .show_nav{
@@ -572,8 +573,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             }
 
             #primary_header .show_nav button svg {
-                height: 14px;
-                width: 14px;
+                height: 38px;
                 margin-left: 10px;
             }
 
@@ -588,7 +588,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 
             #primary_header .show_nav button {
                 border-radius: 20px;
-                background: #dc470f;
+                background: #c74818;
                 color: white;
                 font-weight: 600;
                 padding: 8px 15px;
@@ -596,7 +596,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             }
 
             #primary_header .menu_open {
-                background: #2a3b22;
+                background: #2A3B22;
             }
 
             #primary_header .hidden_nav {
@@ -660,8 +660,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 width: 100%;
                 margin: auto;
                 position: relative;
-                z-index: 99;
-                padding: 0 30px;
+                z-index: 999;
             }
 
             #primary_header .hidden_nav_wrapper{
@@ -678,7 +677,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 justify-content: center;
                 align-items: center;
                 overflow: hidden;
-                z-index: 90;
+                z-index: 990;
             }
 
             #primary_header .d-none{
@@ -712,15 +711,15 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             }
 
             #primary_header .cart svg {
-                width: 18px;
-                height: 18px;
+                width: 24px;
+                height: 24px;
             }
 
             #primary_header .cart .items {
                 position: absolute;
                 top: -5px;
                 right: -7px;
-                background: #b30c0c;
+                background: #c74818;
                 border-radius: 50%;
                 width: 14px;
                 height: 14px;
@@ -736,6 +735,14 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 
 
             @media(max-width: 500px){
+
+                #primary_header .container{
+                    padding: 0 30px;
+                }
+
+                #primary_header .logo img{
+                    width: 100px;
+                }
 
                 #primary_header .show_nav .logo {
                     order: 1;
@@ -757,11 +764,10 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     padding: 20px 0;
                 }
                 #primary_header{
-                    background: #2a3b22;
+                    background: #2A3B22;
                 }
                 #primary_header .show_nav button svg{
-                    height: 18px;
-                    width: 18px;
+                    height: 38px;
                     margin-left: 0;
                 }
 
@@ -792,7 +798,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     left: 0;
                     right: 0;
                     text-align: center;
-                    background: #2a3b22;   
+                    background: #2A3B22;   
                     padding: 0;    
                     border: none;         
                 }
