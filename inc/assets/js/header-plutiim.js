@@ -30,14 +30,16 @@ jQuery(document).ready(function ($) {
     });
 
     hiddenNavParentsLi.on("click", function () {
-        const childSelector = $(this).data("target");
-        hiddenNavParentsLi.removeClass('active');
-        hiddenNavChildsLi.addClass('d-none');
-        hiddenNavChilds.removeClass('d-none');
-        backwardText.html($(this).find('a .title').text());
-        backward.removeClass('d-none');
-        $(this).addClass('active');
-        $(`.hidden_nav .childs .${childSelector}`).removeClass('d-none');
+		if($(this).find("span.sup").length !== 0){
+			const childSelector = $(this).data("target");
+			hiddenNavParentsLi.removeClass('active');
+			hiddenNavChildsLi.addClass('d-none');
+			hiddenNavChilds.removeClass('d-none');
+			backwardText.html($(this).find('a .title').text());
+			backward.removeClass('d-none');
+			$(this).addClass('active');
+			$(`.hidden_nav .childs .${childSelector}`).removeClass('d-none');
+		}
     });
 
     backward.on("click", function () {

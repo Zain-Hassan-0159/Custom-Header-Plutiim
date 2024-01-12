@@ -286,8 +286,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     '{{WRAPPER}} #primary_header .show_nav button' => 'color: {{VALUE}}',
                     '{{WRAPPER}} #primary_header .show_nav button.close svg line' => 'stroke: {{VALUE}}',
                     '{{WRAPPER}} #primary_header .show_nav button.normal svg path' => 'fill: {{VALUE}}',
-                    '{{WRAPPER}} #primary_header .cart svg' => 'stroke: {{VALUE}}',
-				],
+                ],
 			]
 		);
 
@@ -310,9 +309,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 					'{{WRAPPER}} #primary_header .show_nav a:hover' => 'color: {{VALUE}}',
                     '{{WRAPPER}} #primary_header .show_nav button:hover' => 'color: {{VALUE}}',
                     '{{WRAPPER}} #primary_header .show_nav button.close:hover svg line' => 'stroke: {{VALUE}}',
-                    '{{WRAPPER}} #primary_header .show_nav button.normal:hover svg path' => 'fill: {{VALUE}}',
-                    '{{WRAPPER}} #primary_header a:hover .cart svg' => 'stroke: {{VALUE}}',
-				],
+                    '{{WRAPPER}} #primary_header .show_nav button.normal:hover svg path' => 'fill: {{VALUE}}',				],
 			]
 		);
 
@@ -324,6 +321,19 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .cart .items' => 'background-color: {{VALUE}}',
 				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'cart_icon_top',
+			[
+				'label' => esc_html__( 'Cart Color', 'hz-widgets' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+                    '{{WRAPPER}} #primary_header .cart svg rect' => 'fill: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .cart svg path' => 'fill: {{VALUE}}',
+
+                ],
 			]
 		);
 
@@ -604,7 +614,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 			#primary_header .hidden_nav_wrapper:before {
 				content: "";
 				width: 100%;
-				height: 100%;
+				height: 200%;
 				background: #2A3B22;
 				position: fixed;
 				top: 0;
@@ -622,18 +632,19 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 margin: 0;
                 padding: 0;
 				max-width: 50%;
-                border-right: 1px solid #ffffff40;
+/*                 border-right: 1px solid #ffffff40; */
 				padding-right: 50px;
 				position: relative;
             }
 			
 			#primary_header ul.parents:after{
-				    content: '';
-					width: 1px;
-					height: 100%;
-					background: #ffffff40;
-					position: absolute;
-					right: 0;
+				content: '';
+				width: 1px;
+				height: 1000%;
+				background: #ffffff40;
+				position: absolute;
+				right: 0px;
+				top: 0;
 			}
 
             #primary_header ul.childs {
@@ -796,7 +807,8 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 				}
 				
 				 #primary_header .sup {
-					transform: translateY(-14px);
+					transform: translateY(-8px);
+					position: absolute;
 				}
 
                 #primary_header .container{
@@ -895,6 +907,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     justify-content: space-between;
                     padding-top: 80px;
                     padding-bottom: 60px;
+					max-height: 100vh;
                 }
 
                 #primary_header .childs a span{
@@ -1084,16 +1097,19 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 					$("body").removeClass("menu-open");
                 });
 
-                hiddenNavParentsLi.on("click", function () {
-                    const childSelector = $(this).data("target");
-                    hiddenNavParentsLi.removeClass('active');
-                    hiddenNavChildsLi.addClass('d-none');
-                    hiddenNavChilds.removeClass('d-none');
-                    backwardText.html($(this).find('a .title').text());
-                    backward.removeClass('d-none');
-                    $(this).addClass('active');
-                    $(`.hidden_nav .childs .${childSelector}`).removeClass('d-none');
-                });
+
+				hiddenNavParentsLi.on("click", function () {
+					if($(this).find("span.sup").length !== 0){
+						const childSelector = $(this).data("target");
+						hiddenNavParentsLi.removeClass('active');
+						hiddenNavChildsLi.addClass('d-none');
+						hiddenNavChilds.removeClass('d-none');
+						backwardText.html($(this).find('a .title').text());
+						backward.removeClass('d-none');
+						$(this).addClass('active');
+						$(`.hidden_nav .childs .${childSelector}`).removeClass('d-none');
+					}
+				});
 
                 backward.on("click", function () {
                     hiddenNavParentsLi.removeClass('active');
