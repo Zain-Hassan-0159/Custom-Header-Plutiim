@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Custom Header Plutiim
  * Description:       Custom Header Plutiim Widget is created by Zain Hassan.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Zain Hassan

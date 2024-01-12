@@ -245,6 +245,8 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .menu_open' => 'background-color: {{VALUE}}',
                     '{{WRAPPER}} #primary_header ul.childs' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} #primary_header .hidden_nav_wrapper:before' => 'background-color: {{VALUE}}',
+
 
 				],
 			]
@@ -257,7 +259,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .childs a span' => 'color: {{VALUE}}',
-                    '{{WRAPPER}} #primary_header sup' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} #primary_header .sup' => 'color: {{VALUE}}',
 
 				],
 			]
@@ -598,6 +600,16 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             #primary_header .menu_open {
                 background: #2A3B22;
             }
+			
+			#primary_header .hidden_nav_wrapper:before {
+				content: "";
+				width: 100%;
+				height: 100%;
+				background: #2A3B22;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+			}
 
             #primary_header .hidden_nav {
                 display: flex;
@@ -612,7 +624,17 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 				max-width: 50%;
                 border-right: 1px solid #ffffff40;
 				padding-right: 50px;
+				position: relative;
             }
+			
+			#primary_header ul.parents:after{
+				    content: '';
+					width: 1px;
+					height: 100%;
+					background: #ffffff40;
+					position: absolute;
+					right: 0;
+			}
 
             #primary_header ul.childs {
                 flex: 1;
@@ -636,11 +658,13 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 font-size: 25px;
             }
 
-            #primary_header sup {
-                font-size: 12px;
-                font-weight: 400;
-                color: #65725e;
-                margin-left: 4px;
+            #primary_header .sup {
+				font-size: 12px;
+				font-weight: 400;
+				color: #65725e;
+				margin-left: 2px;
+				transform: translateY(-20px);
+				display: inline-block;
             }
 
 
@@ -668,7 +692,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             #primary_header .hidden_nav_wrapper{
                 position: absolute;
                 width: 100%;
-                height: 100%;
+                height: 100vh;
                 bottom: 0;
                 left: 0;
                 top: 0;
@@ -763,6 +787,17 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 			}
 
             @media(max-width: 500px){
+				
+				#primary_header ul.parents:after{
+						content: '';
+						width: 0px;
+						height: 0;
+						position: unset;
+				}
+				
+				 #primary_header .sup {
+					transform: translateY(-14px);
+				}
 
                 #primary_header .container{
                     padding: 0 30px;
@@ -840,8 +875,9 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 }
 
                 #primary_header svg.feather.feather-arrow-left {
-                    float: left;
-                    transform: translateY(7px);                
+					transform: translateY(7px);
+					position: absolute;
+					left: 30px;               
                 }
 
                 #primary_header svg.feather.feather-arrow-left path{
@@ -867,6 +903,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 
                 #primary_header .mobile_nav{
                     display: block;
+					position: relative;
                 }
 
                 #primary_header .mobile_nav ul {
@@ -874,6 +911,10 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                     text-align: center;
                     list-style: none;
                 }
+				
+				#primary_header .mobile_nav ul li{
+					margin-bottom: 24px;
+				}
 
                 #primary_header .mobile_nav ul li a {
                     font-size: 14px;
@@ -969,7 +1010,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                             foreach($menu_items as $item) : 
                                 if($item->menu_item_parent == 0) :
                                     ?>
-                                    <li data-target="<?php echo 'target_' .$item->ID; ?>"><a href="<?php echo $item->url; ?>"><span class="title"><?php echo $item->title; ?></span><?php echo isset($child_counts[$item->ID]) ? '<sup>(' .$child_counts[$item->ID]. ')</sup>' : ''; ?></a></li>
+                                    <li data-target="<?php echo 'target_' .$item->ID; ?>"><a href="<?php echo $item->url; ?>"><span class="title"><?php echo $item->title; ?></span><?php echo isset($child_counts[$item->ID]) ? '<span class="sup">(' .$child_counts[$item->ID]. ')</span>' : ''; ?></a></li>
                                     <?php 
                                 endif;
                             endforeach; 
