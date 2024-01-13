@@ -115,6 +115,16 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         return $menuArray;
     }
 
+    private function get_site_logo(){
+        $custom_logo_id = get_theme_mod('custom_logo');
+                        
+        if ($custom_logo_id) {
+            $logo_img = wp_get_attachment_image_src($custom_logo_id, 'full');
+            return esc_url($logo_img[0]);
+        }
+        return \Elementor\Utils::get_placeholder_image_src();
+    }
+
 	/**
 	 * Register list widget controls.
 	 *
@@ -153,6 +163,58 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} #primary_header .container' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
+			]
+		);
+
+        $this->add_control(
+			'select_logo',
+			[
+				'label' => esc_html__( 'Choose Logo', 'hz-widgets' ),
+				'type' => \Elementor\Controls_Manager::MEDIA,
+				'default' => [
+					'url' => $this->get_site_logo(),
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'logo_height',
+			[
+				'label' => esc_html__( 'Logo Height', 'hz-widgets' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+						'step' => 5,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 60,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #primary_header .logo img' => 'height: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+        $this->add_control(
+			'breakpoint',
+			[
+				'label' => esc_html__( 'Breakpoint Width', 'hz-widgets' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 1000,
+						'step' => 5,
+					]
+				],
+				'default' => [
+					'size' => 767,
+				]
 			]
 		);
 
@@ -562,8 +624,6 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
         // return array with ids and child counts of menu items which has more than or equal to 1 child
         $child_counts = $this->get_child_counts($menu_items);
 
-        // echo "<pre>";
-        // print_r($menu_items);
         ?>
         <style>
 
@@ -576,8 +636,8 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
             }
 
             #primary_header .logo img{
-                max-height: 50px;
-                width: 180px;
+                height: 50px;
+                object-fit: contain;
             }
 
             #primary_header .show_nav{
@@ -797,7 +857,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 				overflow: hidden;
 			}
 
-            @media(max-width: 500px){
+            @media(max-width: <?php echo $settings['breakpoint']['size']; ?>px){
 				
 				#primary_header ul.parents:after{
 						content: '';
@@ -956,14 +1016,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 <nav class="show_nav">
                     <div class="logo">
                         <?php
-                        $custom_logo_id = get_theme_mod('custom_logo');
-                        
-                        if ($custom_logo_id) {
-                            $logo_img = wp_get_attachment_image_src($custom_logo_id, 'full');
-                            echo '<a href="' . home_url('/') . '"><img src="' . esc_url($logo_img[0]) . '" alt="' . get_bloginfo('name') . '"></a>';
-                        } else {
-                            echo '<a href="' . home_url('/') . '">' . get_bloginfo('name') . '</a>';
-                        }
+                            echo '<a href="' . home_url('/') . '"><img src="' . $settings['select_logo']['url'] . '" alt="' . get_bloginfo('name') . '"></a>';
                         ?>
                     </div>
                     <div class="menu_button">
