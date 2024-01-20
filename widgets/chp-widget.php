@@ -692,7 +692,6 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
                 margin: 0;
                 padding: 0;
 				max-width: 50%;
-/*                 border-right: 1px solid #ffffff40; */
 				padding-right: 50px;
 				position: relative;
             }
@@ -1050,7 +1049,7 @@ class Elementor_Chp_Widget extends \Elementor\Widget_Base {
 								</path>
 								</g>
 								</svg>
-                                <div class="items">0</div>
+                                <div class="items"><?php echo WC()->cart->get_cart_contents_count(); ?></div>
                             </div>
                         </a>
                     </div>
